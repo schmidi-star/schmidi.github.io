@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lea — Product Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F3EE;
+    --warm-white: #FDFAF6;
+    --sand: #E8DDD0;
+    --clay: #C4A882;
+    --terracotta: #B5714A;
+    --bark: #6B4F3A;
+    --ink: #2C1F14;
+    --soft-ink: #5C4A3A;
+    --sage: #8A9E85;
+    --sage-light: #D4E0D0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 3rem;
+    background: rgba(247, 243, 238, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--sand);
+  }
+
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.4rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--soft-ink);
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--terracotta); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 6rem 3rem 3rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-shape {
+    position: absolute;
+    right: -8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55vw;
+    height: 55vw;
+    border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+    background: radial-gradient(ellipse at center, var(--sage-light) 0%, var(--sand) 60%, transparent 100%);
+    opacity: 0.6;
+    z-index: 0;
+    animation: morphBlob 12s ease-in-out infinite;
+  }
+
+  @keyframes morphBlob {
+    0%, 100% { border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%; }
+    33% { border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
+    66% { border-radius: 55% 45% 60% 40% / 40% 60% 45% 55%; }
+  }
+
+  .hero-text { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-headline {
+    font-family: 'Lora', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--soft-ink);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--terracotta);
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--bark); transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--soft-ink);
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    border: 1.5px solid var(--clay);
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--bark); color: var(--bark); transform: translateY(-2px); }
+
+  .hero-visual {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1s 0.6s forwards;
+  }
+
+  .avatar-wrap {
+    position: relative;
+    width: 380px;
+    height: 380px;
+  }
+
+  .avatar-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50% 42% 48% 44% / 44% 48% 42% 50%;
+    background: linear-gradient(135deg, var(--sand) 0%, var(--clay) 60%, var(--terracotta) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lora', serif;
+    font-size: 6rem;
+    color: white;
+    font-style: italic;
+    animation: morphBlob 10s ease-in-out infinite reverse;
+    box-shadow: 0 20px 60px rgba(181, 113, 74, 0.25);
+  }
+
+  .floating-tag {
+    position: absolute;
+    background: white;
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    box-shadow: 0 8px 30px rgba(44, 31, 20, 0.1);
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .floating-tag:nth-child(2) { top: 10%; right: -2rem; animation-delay: 0s; }
+  .floating-tag:nth-child(3) { bottom: 15%; left: -2rem; animation-delay: 1.5s; }
+  .floating-tag:nth-child(4) { top: 55%; right: -3rem; animation-delay: 0.8s; }
+
+  .tag-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 3rem; }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--terracotta); }
+
+  .section-intro {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--soft-ink);
+    max-width: 600px;
+    font-weight: 300;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--warm-white);
+    border-radius: 2rem;
+    margin: 0 1.5rem;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .about-bio {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--soft-ink);
+    font-weight: 300;
+  }
+
+  .about-bio p + p { margin-top: 1.2rem; }
+
+  .about-bio strong { color: var(--ink); font-weight: 500; }
+
+  .about-sidebar {}
+
+  .edu-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--clay);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .edu-card:hover { border-color: var(--terracotta); transform: translateX(4px); }
+
+  .edu-degree {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .edu-school {
+    font-size: 0.9rem;
+    color: var(--terracotta);
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+
+  .edu-year {
+    font-size: 0.8rem;
+    color: var(--soft-ink);
+    font-weight: 300;
+  }
+
+  .skills-wrap {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-chip {
+    background: var(--sand);
+    color: var(--bark);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .skill-chip:hover { background: var(--clay); color: white; }
+
+  /* CASE STUDIES */
+  #work {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .work-header {
+    max-width: 1100px;
+    margin: 0 auto 3rem;
+  }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .case-card {
+    background: var(--warm-white);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .case-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(44, 31, 20, 0.1); }
+
+  .case-card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; }
+
+  .case-visual {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .case-card.featured .case-visual { height: auto; min-height: 300px; }
+
+  .cv-1 { background: linear-gradient(135deg, #E8DDD0, #C4A882); }
+  .cv-2 { background: linear-gradient(135deg, #D4E0D0, #8A9E85); }
+  .cv-3 { background: linear-gradient(135deg, #E0D4D0, #B58580); }
+
+  .case-content { padding: 1.8rem; }
+
+  .case-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 0.6rem;
+  }
+
+  .case-title {
+    font-family: 'Lora', serif;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .case-desc {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--soft-ink);
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+
+  .case-meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .case-metric {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-val {
+    font-family: 'Lora', serif;
+    font-size: 1.4rem;
+    color: var(--terracotta);
+    font-weight: 600;
+  }
+
+  .metric-label {
+    font-size: 0.72rem;
+    color: var(--soft-ink);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .case-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--terracotta);
+    font-weight: 500;
+    margin-top: 1.2rem;
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+
+  .case-arrow:hover { gap: 0.7rem; }
+
+  /* BLOG */
+  #blog {
+    background: var(--ink);
+    border-radius: 2rem;
+    margin: 0 1.5rem;
+    padding: 5rem 4rem;
+  }
+
+  #blog .section-label { color: var(--clay); }
+  #blog .section-title { color: var(--cream); }
+  #blog .section-intro { color: rgba(247, 243, 238, 0.65); }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .post-card {
+    background: rgba(247, 243, 238, 0.06);
+    border: 1px solid rgba(247, 243, 238, 0.12);
+    border-radius: 16px;
+    padding: 1.8rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .post-card:hover {
+    background: rgba(247, 243, 238, 0.1);
+    transform: translateY(-4px);
+  }
+
+  .post-date {
+    font-size: 0.75rem;
+    color: var(--clay);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+
+  .post-title {
+    font-family: 'Lora', serif;
+    font-size: 1.15rem;
+    color: var(--cream);
+    line-height: 1.35;
+    margin-bottom: 0.8rem;
+  }
+
+  .post-excerpt {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(247, 243, 238, 0.55);
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+
+  .post-tag {
+    display: inline-block;
+    background: rgba(196, 168, 130, 0.15);
+    color: var(--clay);
+    border-radius: 100px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* THINKING */
+  #thinking {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 3rem;
+  }
+
+  .thinking-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.2rem;
+  }
+
+  .principle-card {
+    background: var(--warm-white);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: transform 0.2s;
+  }
+
+  .principle-card:hover { transform: translateY(-4px); }
+
+  .principle-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+
+  .principle-title {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+
+  .principle-text {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--soft-ink);
+    font-weight: 300;
+  }
+
+  /* CONTACT */
+  #contact {
+    text-align: center;
+    padding: 6rem 3rem;
+    background: var(--sand);
+    border-radius: 2rem;
+    margin: 0 1.5rem 3rem;
+  }
+
+  #contact .section-title { margin-bottom: 1rem; }
+  #contact .section-intro { margin: 0 auto 2.5rem; }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem 3rem;
+    font-size: 0.82rem;
+    color: var(--soft-ink);
+    font-weight: 300;
+  }
+
+  /* DIVIDER */
+  .wave-divider {
+    height: 60px;
+    background: transparent;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(44, 31, 20, 0.7);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--warm-white);
+    border-radius: 24px;
+    max-width: 720px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    transform: translateY(30px);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    padding: 2.5rem 2.5rem 0;
+  }
+
+  .modal-close {
+    float: right;
+    background: var(--sand);
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .modal-close:hover { background: var(--clay); color: white; }
+
+  .modal-body { padding: 1.5rem 2.5rem 2.5rem; }
+
+  .modal-body h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.8rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-body .modal-tag {
+    color: var(--terracotta);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .modal-body p {
+    font-size: 0.96rem;
+    line-height: 1.8;
+    color: var(--soft-ink);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .modal-body h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin: 1.8rem 0 0.6rem;
+  }
+
+  .modal-metrics {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    #hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 3rem; }
+    .hero-visual { display: none; }
+    .hero-bg-shape { width: 80vw; height: 80vw; right: -15vw; opacity: 0.4; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .case-grid { grid-template-columns: 1fr; }
+    .case-card.featured { grid-template-columns: 1fr; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .thinking-grid { grid-template-columns: 1fr; }
+    #blog { padding: 3rem 1.5rem; margin: 0 0.5rem; }
+    #about, #contact { margin: 0 0.5rem; }
+    section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Lea ✦</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#thinking">Thinking</a></li>
+    <li><a href="#blog">Writing</a></li>
+    <li><a href="#contact">Say hello</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-shape"></div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">Product Manager · SaaS · Human-centered</p>
+    <h1 class="hero-headline">Building products<br>people actually <em>love</em></h1>
+    <p class="hero-sub">Hi, I'm Lea. I sit at the intersection of user empathy, system thinking, and clear decision-making. I believe the best products don't just solve problems — they make people feel understood.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">See my work</a>
+      <a href="#about" class="btn-secondary">About me</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="avatar-wrap">
+      <div class="avatar-circle">L</div>
+      <div class="floating-tag">
+        <div class="tag-dot" style="background:#8A9E85"></div>
+        <span>User Research</span>
+      </div>
+      <div class="floating-tag">
+        <div class="tag-dot" style="background:#B5714A"></div>
+        <span>0→1 products</span>
+      </div>
+      <div class="floating-tag">
+        <div class="tag-dot" style="background:#C4A882"></div>
+        <span>SaaS · B2B</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <p class="section-label">About me</p>
+      <h2 class="section-title">A PM who leads with <em>curiosity</em></h2>
+      <div class="about-bio">
+        <p>I'm a product manager with a passion for building SaaS products that make complex things feel simple. My work starts with people — their frustrations, their workarounds, the things they don't say out loud in interviews but reveal through their behavior.</p>
+        <p>I've worked across the full product lifecycle, from early discovery and shaping in 0-to-1 environments to scaling established platforms. I'm comfortable in ambiguity, love a well-structured problem, and believe that the best roadmap decision is one your whole team can rally behind.</p>
+        <p>Outside of product, I'm drawn to <strong>behavioral economics</strong>, reading about urban design, and cooking elaborate meals that almost always work out.</p>
+      </div>
+    </div>
+    <div class="about-sidebar">
+      <p class="section-label" style="margin-bottom:1rem">Education</p>
+      <div class="edu-card">
+        <p class="edu-degree">MSc in Digital Innovation & Entrepreneurship</p>
+        <p class="edu-school">University of Amsterdam</p>
+        <p class="edu-year">2020 – 2022</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-degree">BA in Cognitive Science & Communication</p>
+        <p class="edu-school">University of Ljubljana</p>
+        <p class="edu-year">2017 – 2020</p>
+      </div>
+      <p class="section-label" style="margin-top:2rem; margin-bottom:0.8rem">Tools & methods</p>
+      <div class="skills-wrap">
+        <span class="skill-chip">User research</span>
+        <span class="skill-chip">Jobs-to-be-done</span>
+        <span class="skill-chip">Figma</span>
+        <span class="skill-chip">SQL</span>
+        <span class="skill-chip">Roadmapping</span>
+        <span class="skill-chip">Mixpanel</span>
+        <span class="skill-chip">A/B testing</span>
+        <span class="skill-chip">PRDs</span>
+        <span class="skill-chip">OKRs</span>
+        <span class="skill-chip">Discovery</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider"></div>
+
+<!-- CASE STUDIES -->
+<section id="work" style="max-width:none; padding: 6rem 3rem;">
+  <div class="work-header">
+    <p class="section-label">Case studies</p>
+    <h2 class="section-title">Selected <em>work</em></h2>
+    <p class="section-intro">Real problems, real constraints, real decisions. Each case study documents my thinking process, not just outcomes.</p>
+  </div>
+
+  <div class="case-grid">
+    <!-- FEATURED -->
+    <a href="#" class="case-card featured" onclick="openModal('case1'); return false;">
+      <div class="case-visual cv-1">🗺️</div>
+      <div class="case-content">
+        <p class="case-tag">0→1 · B2B SaaS · 2023</p>
+        <h3 class="case-title">Rebuilding onboarding from scratch — from 40% to 78% activation</h3>
+        <p class="case-desc">Our onboarding had been held together with duct tape for two years. Users were dropping off at step 3 and nobody could tell me why. This is the story of how we diagnosed the real problem and shipped a complete redesign in 10 weeks.</p>
+        <div class="case-meta">
+          <div class="case-metric">
+            <span class="metric-val">+38pp</span>
+            <span class="metric-label">activation rate</span>
+          </div>
+          <div class="case-metric">
+            <span class="metric-val">-52%</span>
+            <span class="metric-label">support tickets</span>
+          </div>
+          <div class="case-metric">
+            <span class="metric-val">10 wks</span>
+            <span class="metric-label">conception to ship</span>
+          </div>
+        </div>
+        <span class="case-arrow">Read full case study →</span>
+      </div>
+    </a>
+
+    <a href="#" class="case-card" onclick="openModal('case2'); return false;">
+      <div class="case-visual cv-2">🌿</div>
+      <div class="case-content">
+        <p class="case-tag">Growth · Retention · 2022</p>
+        <h3 class="case-title">Designing a feature that users didn't know they needed</h3>
+        <p class="case-desc">Discovery-led work that surfaced a behavioral pattern hidden in our analytics and turned it into our highest-rated feature.</p>
+        <div class="case-meta">
+          <div class="case-metric">
+            <span class="metric-val">+22%</span>
+            <span class="metric-label">monthly retention</span>
+          </div>
+          <div class="case-metric">
+            <span class="metric-val">4.8★</span>
+            <span class="metric-label">user rating</span>
+          </div>
+        </div>
+        <span class="case-arrow">Read case study →</span>
+      </div>
+    </a>
+
+    <a href="#" class="case-card" onclick="openModal('case3'); return false;">
+      <div class="case-visual cv-3">🔴</div>
+      <div class="case-content">
+        <p class="case-tag">Platform · Scaling · 2024</p>
+        <h3 class="case-title">Killing a beloved feature — and surviving it</h3>
+        <p class="case-desc">Sometimes the hardest PM decision is what <em>not</em> to build. This case is about sunsetting a legacy feature that 30% of users touched, but nobody truly needed.</p>
+        <div class="case-meta">
+          <div class="case-metric">
+            <span class="metric-val">0</span>
+            <span class="metric-label">major churn incidents</span>
+          </div>
+          <div class="case-metric">
+            <span class="metric-val">-40%</span>
+            <span class="metric-label">tech debt</span>
+          </div>
+        </div>
+        <span class="case-arrow">Read case study →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- MY THINKING -->
+<section id="thinking">
+  <p class="section-label">My approach</p>
+  <h2 class="section-title">How I <em>think</em> about product</h2>
+  <p class="section-intro">A few principles that shape how I work — born from experience, failure, and reading too many post-mortems.</p>
+
+  <div class="thinking-grid">
+    <div class="principle-card">
+      <div class="principle-icon">🔍</div>
+      <h3 class="principle-title">The real problem is rarely the stated one</h3>
+      <p class="principle-text">Stakeholders come with solutions disguised as problems. I spend the first week of any project questioning the framing before even thinking about answers.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🤝</div>
+      <h3 class="principle-title">Alignment is a product, too</h3>
+      <p class="principle-text">The best roadmap that no one believes in will fail. I invest heavily in making sure my team understands the <em>why</em> before the <em>what</em>.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">📐</div>
+      <h3 class="principle-title">Constraints are creative fuel</h3>
+      <p class="principle-text">I've shipped more impactful things under tight timelines and limited resources than in open-ended explorations. Constraints force prioritization and clarity.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🌊</div>
+      <h3 class="principle-title">Slow down to go fast</h3>
+      <p class="principle-text">Two extra days of discovery can save six weeks of building the wrong thing. I protect this space even when it's uncomfortable to do so.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">💬</div>
+      <h3 class="principle-title">Users lie, behaviors don't</h3>
+      <p class="principle-text">I trust what I see in session recordings and analytics more than what people tell me in interviews. I listen for the gap between the two.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">✂️</div>
+      <h3 class="principle-title">Simplicity is a decision, not a default</h3>
+      <p class="principle-text">Simple products are harder to build than complex ones. Every piece of abstracted complexity is a deliberate, defended choice.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider"></div>
+
+<!-- BLOG -->
+<section id="blog">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label">Writing</p>
+    <h2 class="section-title">Things I think about</h2>
+    <p class="section-intro">Unpolished thoughts, lessons from the trenches, and questions I'm still sitting with.</p>
+
+    <div class="posts-grid">
+      <a href="#" class="post-card" onclick="openModal('post1'); return false;">
+        <p class="post-date">February 2025</p>
+        <h3 class="post-title">Why discovery is the first thing teams cut — and why that's backwards</h3>
+        <p class="post-excerpt">When timelines get tight, discovery goes out the window. I've watched this happen at four companies. Here's what I've learned about protecting it.</p>
+        <span class="post-tag">Process</span>
+      </a>
+      <a href="#" class="post-card" onclick="openModal('post2'); return false;">
+        <p class="post-date">December 2024</p>
+        <h3 class="post-title">The "obvious" feature that wasn't: a story about assumption debt</h3>
+        <p class="post-excerpt">We built something in 3 days that we were "sure" users wanted. Six weeks later, we had our answer. It wasn't what we expected.</p>
+        <span class="post-tag">Product lessons</span>
+      </a>
+      <a href="#" class="post-card" onclick="openModal('post3'); return false;">
+        <p class="post-date">October 2024</p>
+        <h3 class="post-title">On saying no: the most underrated skill in product management</h3>
+        <p class="post-excerpt">Saying no isn't about being difficult. It's about understanding opportunity cost deeply enough to articulate it without losing people in the room.</p>
+        <span class="post-tag">Leadership</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Let's connect</p>
+  <h2 class="section-title">I'd love to <em>talk</em></h2>
+  <p class="section-intro">Whether you're hiring, building something interesting, or just want to exchange notes on product — my inbox is open.</p>
+  <div class="contact-links">
+    <a href="mailto:lea@example.com" class="btn-primary">Send me an email</a>
+    <a href="#" class="btn-secondary">LinkedIn →</a>
+    <a href="#" class="btn-secondary">Read my CV →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Made with intention by Lea · 2025 · All thoughts my own</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal" id="modalContent">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const modalData = {
+  case1: {
+    tag: '0→1 · B2B SaaS · 2023',
+    title: 'Rebuilding onboarding from scratch — from 40% to 78% activation',
+    body: `
+      <h3>The situation</h3>
+      <p>I joined this project six months in. The onboarding flow had been "temporarily" patched together 18 months earlier and never revisited. Our activation rate (users who completed setup and had their first meaningful moment) sat at 40%. We knew it was a problem. Nobody knew why.</p>
+      <h3>How I approached discovery</h3>
+      <p>I started with data. Session recordings (Hotjar), funnel analysis (Mixpanel), and a manual review of 60 support tickets from the past quarter. What I found: 68% of drop-offs happened at step 3 — not because the step was hard, but because users didn't understand <em>why</em> it was needed. We were asking for information before we'd earned the right to ask for it.</p>
+      <p>I ran 12 user interviews, focusing specifically on new users who had churned in the first week. A pattern emerged: they felt "talked at" — the product was explaining itself, not helping them achieve something.</p>
+      <h3>The decision</h3>
+      <p>Rather than patching the existing flow, I made the case to rebuild from a new principle: <strong>every step should deliver value before asking for effort</strong>. The team was skeptical — it was a bigger scope than they'd anticipated. I made the case by showing the cost of inaction: at our MRR and conversion rate, every 1pp of activation improvement was worth roughly €18k/year.</p>
+      <h3>What we shipped</h3>
+      <p>A progressive onboarding system that front-loaded the product's core value proposition (a live, pre-populated demo with the user's own context) before asking them to configure anything. We reduced the number of steps from 9 to 5 and added contextual tooltips written in plain language.</p>
+      <div class="modal-metrics">
+        <div class="case-metric"><span class="metric-val">+38pp</span><span class="metric-label">activation rate (40% → 78%)</span></div>
+        <div class="case-metric"><span class="metric-val">-52%</span><span class="metric-label">first-week support tickets</span></div>
+        <div class="case-metric"><span class="metric-val">10 wks</span><span class="metric-label">conception to ship</span></div>
+      </div>
+      <h3>What I learned</h3>
+      <p>Onboarding is a promise. Users aren't completing steps — they're deciding whether to trust you with their time. The moment we designed from that lens, the right decisions became obvious.</p>
+    `
+  },
+  case2: {
+    tag: 'Growth · Retention · 2022',
+    title: 'Designing a feature users didn\'t know they needed',
+    body: `
+      <h3>The background</h3>
+      <p>During a quarterly data review, I noticed a behavioral anomaly: 18% of our power users were creating duplicate workspaces in a pattern that looked intentional. The feature wasn't built for this. It was a workaround — and a clue.</p>
+      <h3>What we found</h3>
+      <p>These users were separating "drafts" from "finalized" work manually because we had no concept of workflow state. They'd built their own system inside ours. When I interviewed eight of them, they called it "the thing I do so I don't mess things up."</p>
+      <h3>What we built</h3>
+      <p>A lightweight "Draft mode" with one-click promotion to "Live" — with full version history. Simple, opinionated, and built around the exact mental model our best users had invented for themselves.</p>
+      <div class="modal-metrics">
+        <div class="case-metric"><span class="metric-val">+22%</span><span class="metric-label">30-day retention</span></div>
+        <div class="case-metric"><span class="metric-val">4.8★</span><span class="metric-label">avg feature rating</span></div>
+      </div>
+    `
+  },
+  case3: {
+    tag: 'Platform · Scaling · 2024',
+    title: 'Killing a beloved feature — and surviving it',
+    body: `
+      <h3>Context</h3>
+      <p>Legacy export functionality that 30% of users "touched" each month — but 80% of those touches were accidental. The feature was built in 2019, had never been updated, and was causing two engineering incidents per quarter on average.</p>
+      <h3>The challenge</h3>
+      <p>Sunsets generate noise, even when they're the right call. I spent four weeks building the case — usage depth analysis, cost-of-maintenance modelling, migration paths. Then I ran a two-week customer communication program with personalized outreach to the 23 users who were genuinely dependent.</p>
+      <h3>The result</h3>
+      <p>Zero major churn incidents. Three of the 23 "at-risk" users upgraded their plans because we helped them migrate to a better-fit solution. The engineering team reclaimed six sprints worth of maintenance capacity.</p>
+      <div class="modal-metrics">
+        <div class="case-metric"><span class="metric-val">0</span><span class="metric-label">churn incidents</span></div>
+        <div class="case-metric"><span class="metric-val">-40%</span><span class="metric-label">tech debt in platform</span></div>
+        <div class="case-metric"><span class="metric-val">+3</span><span class="metric-label">plan upgrades from affected users</span></div>
+      </div>
+    `
+  },
+  post1: {
+    tag: 'Process · February 2025',
+    title: 'Why discovery is the first thing teams cut — and why that\'s backwards',
+    body: `
+      <p>I've been in four different orgs where the same thing happened when timelines got tight: discovery got cut. "We already know what users need." "We'll validate after we ship." "We don't have time."</p>
+      <p>This is backwards. And I think I finally understand why it keeps happening.</p>
+      <h3>Discovery feels like delay because we measure it wrong</h3>
+      <p>We measure discovery in time spent before shipping. But we should measure it in time saved by not building the wrong thing. Two days of interviews and a handful of prototype tests have saved me from six-week detours more times than I can count.</p>
+      <p>The problem is that the six-week detour hasn't happened yet when the timeline pressure hits. So the ROI of discovery is invisible until it's too late.</p>
+      <h3>What I do to protect it</h3>
+      <p>I pre-negotiate discovery time upfront, when there's no pressure. I name it as a line item in the project plan. I give it a deliverable — not "we'll talk to users" but "we'll have a validated problem statement and 3 proposed directions by week 2." Deliverables make discovery legible to people who don't run it.</p>
+      <p>I've also learned to run discovery in parallel with execution where I can — talking to users about the next problem while the team ships the current solution. It's not always possible, but when it works, it removes the perceived trade-off entirely.</p>
+    `
+  },
+  post2: {
+    tag: 'Product lessons · December 2024',
+    title: 'The "obvious" feature that wasn\'t: a story about assumption debt',
+    body: `
+      <p>In early 2024, we were convinced users wanted dark mode. The requests were loud. Our support inbox said so. Twitter said so. So we deprioritized three other things, put two engineers on it for a sprint, and shipped it.</p>
+      <p>Six weeks later: 4% feature adoption among active users.</p>
+      <h3>What went wrong</h3>
+      <p>The people who asked loudly were a vocal minority — enthusiast users who wanted to feel heard. The majority of our users (SMB ops teams, often in shared office environments) didn't care at all. We'd confused volume of feedback with representativeness of feedback.</p>
+      <h3>What I learned</h3>
+      <p>Assumption debt is real. Every "we know users want X" statement is a debt that comes due. Now, whenever I hear "obviously users want this," I treat it as a hypothesis that requires at least lightweight validation — even if that's just five-minute corridor tests with our existing users.</p>
+      <p>Dark mode was a fine feature. The mistake was treating "people are asking for it" as a substitute for understanding whether it would actually move the metrics we cared about.</p>
+    `
+  },
+  post3: {
+    tag: 'Leadership · October 2024',
+    title: 'On saying no: the most underrated skill in product management',
+    body: `
+      <p>Nobody teaches you how to say no in product school. They teach you frameworks for prioritization, which is the analytical version of the same thing. But the actual moment — the one where a founder, a VP of Sales, or your most vocal enterprise customer is looking at you expecting a yes — that's something else entirely.</p>
+      <h3>Why no is so hard</h3>
+      <p>Because in the moment, yes feels like collaboration and no feels like obstruction. The incentives are misaligned. Saying yes gets you out of the room faster, and the cost (a broken roadmap, a team pulled in five directions) shows up three months later when you're not in that room anymore.</p>
+      <h3>The reframe that helped me</h3>
+      <p>I stopped thinking of no as a rejection and started thinking of it as prioritization made visible. Instead of "no, we can't do that," I started saying "yes — and here's what would have to move to make room for it." This does two things: it makes the opportunity cost concrete, and it gives the person I'm talking to agency. Sometimes they decide it's worth the trade. More often, they don't.</p>
+      <p>The most powerful no I've ever delivered wasn't confrontational — it was just deeply informed. When you understand the business, the user, and the technical constraints well enough, the right answer often becomes obvious to everyone in the room simultaneously.</p>
+    `
+  }
+};
+
+function openModal(key) {
+  const data = modalData[key];
+  if (!data) return;
+  document.getElementById('modalBody').innerHTML = `
+    <span class="modal-tag">${data.tag}</span>
+    <h2>${data.title}</h2>
+    ${data.body}
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOnOverlay(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.case-card, .post-card, .principle-card, .edu-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
